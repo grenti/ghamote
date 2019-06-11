@@ -1,7 +1,17 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React, { FunctionComponent } from 'react'
 
-const Pricing = ({ data }) => (
+interface IPricingProps {
+  data: [
+    {
+      plan: string
+      price: string | number
+      description: string
+      items: []
+    },
+  ]
+}
+
+const Pricing: FunctionComponent<IPricingProps> = ({ data }) => (
   <div className="columns">
     {data.map(price => (
       <div key={price.plan} className="column">
@@ -25,16 +35,5 @@ const Pricing = ({ data }) => (
     ))}
   </div>
 )
-
-Pricing.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      plan: PropTypes.string,
-      price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-      description: PropTypes.string,
-      items: PropTypes.array,
-    })
-  ),
-}
 
 export default Pricing

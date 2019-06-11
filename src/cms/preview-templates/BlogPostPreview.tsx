@@ -1,8 +1,17 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React, { FunctionComponent } from 'react'
 import { BlogPostTemplate } from '../../templates/blog-post'
 
-const BlogPostPreview = ({ entry, widgetFor }) => (
+interface IBlogPostPreviewProps {
+  entry: {
+    getIn: ([]) => string
+  }
+  widgetFor: (x: string) => {}
+}
+
+const BlogPostPreview: FunctionComponent<IBlogPostPreviewProps> = ({
+  entry,
+  widgetFor,
+}) => (
   <BlogPostTemplate
     content={widgetFor('body')}
     description={entry.getIn(['data', 'description'])}
@@ -10,12 +19,5 @@ const BlogPostPreview = ({ entry, widgetFor }) => (
     title={entry.getIn(['data', 'title'])}
   />
 )
-
-BlogPostPreview.propTypes = {
-  entry: PropTypes.shape({
-    getIn: PropTypes.func,
-  }),
-  widgetFor: PropTypes.func,
-}
 
 export default BlogPostPreview

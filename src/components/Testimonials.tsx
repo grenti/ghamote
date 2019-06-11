@@ -1,8 +1,18 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React, { FunctionComponent } from 'react'
 import { v4 } from 'uuid'
 
-const Testimonials = ({ testimonials }) => (
+interface ITestimonialProps {
+  testimonials: [
+    {
+      quote: string
+      author: string
+    },
+  ]
+}
+
+const Testimonials: FunctionComponent<ITestimonialProps> = ({
+  testimonials,
+}) => (
   <div>
     {testimonials.map(testimonial => (
       <article key={v4()} className="message">
@@ -15,14 +25,5 @@ const Testimonials = ({ testimonials }) => (
     ))}
   </div>
 )
-
-Testimonials.propTypes = {
-  testimonials: PropTypes.arrayOf(
-    PropTypes.shape({
-      quote: PropTypes.string,
-      author: PropTypes.string,
-    })
-  ),
-}
 
 export default Testimonials

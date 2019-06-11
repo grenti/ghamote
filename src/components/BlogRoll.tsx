@@ -1,9 +1,23 @@
+import { graphql, Link, StaticQuery } from 'gatsby'
 import React from 'react'
-import PropTypes from 'prop-types'
-import { Link, graphql, StaticQuery } from 'gatsby'
 import PreviewCompatibleImage from './PreviewCompatibleImage'
 
-class BlogRoll extends React.Component {
+interface IBlogRoll {
+  data: {
+    allMarkdownRemark: {
+      edges: [
+        {
+          frontmatter: {
+            featuredpost: string
+          }
+          title: string
+        },
+      ]
+    }
+  }
+}
+
+class BlogRoll extends React.Component<IBlogRoll> {
   render() {
     const { data } = this.props
     const { edges: posts } = data.allMarkdownRemark
@@ -23,10 +37,8 @@ class BlogRoll extends React.Component {
                     <div className="featured-thumbnail">
                       <PreviewCompatibleImage
                         imageInfo={{
+                          alt: `featured image thumbnail for post ${post.title}`,
                           image: post.frontmatter.featuredimage,
-                          alt: `featured image thumbnail for post ${
-                            post.title
-                          }`,
                         }}
                       />
                     </div>
@@ -58,14 +70,6 @@ class BlogRoll extends React.Component {
       </div>
     )
   }
-}
-
-BlogRoll.propTypes = {
-  data: PropTypes.shape({
-    allMarkdownRemark: PropTypes.shape({
-      edges: PropTypes.array,
-    }),
-  }),
 }
 
 export default () => (

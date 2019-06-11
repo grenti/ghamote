@@ -1,11 +1,17 @@
-import React from 'react'
+import React, { FunctionComponent, ReactChildren } from 'react'
 import Helmet from 'react-helmet'
-import Footer from '../components/Footer'
-import Navbar from '../components/Navbar'
 import './all.sass'
+import Footer from './Footer'
+import Navbar from './Navbar'
 import useSiteMetadata from './SiteMetadata'
 
-const TemplateWrapper = ({ children }) => {
+interface ITemplateWrapperProps {
+  children: ReactChildren
+}
+
+const TemplateWrapper: FunctionComponent<ITemplateWrapperProps> = ({
+  children,
+}) => {
   const { title, description } = useSiteMetadata()
   return (
     <div>
