@@ -1,0 +1,11 @@
+{
+  "extends": ["tslint:latest", "tslint-config-prettier", "tslint-react"],
+  "rules": {
+    "member-access": false,
+    "no-submodule-imports": false,
+    "no-implicit-dependencies": false,
+    "semicolon": false,
+    "trailing-comma": true,
+    ""
+  }
+}
