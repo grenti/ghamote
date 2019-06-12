@@ -1,14 +1,17 @@
-import React, { FunctionComponent } from 'react'
+import React from 'react'
 import { AboutPageTemplate } from '../../templates/about-page'
 
 interface IAboutPagePreviewProps {
   entry: {
-    getIn: ([]) => string,
+    getIn: ([]) => string
   }
-  widgetFor: (x: string) => string,
+  widgetFor: (x: string) => string
 }
 
-const AboutPagePreview = ({ entry, widgetFor }): FunctionComponent<IAboutPagePreviewProps> => {
+export default function AboutPagePreview({
+  entry,
+  widgetFor,
+}: IAboutPagePreviewProps) {
   return (
     <AboutPageTemplate
       title={entry.getIn(['data', 'title'])}
@@ -16,12 +19,3 @@ const AboutPagePreview = ({ entry, widgetFor }): FunctionComponent<IAboutPagePre
     />
   )
 }
-
-// AboutPagePreview.propTypes = {
-//   entry: PropTypes.shape({
-//     getIn: PropTypes.func,
-//   }),
-//   widgetFor: PropTypes.func,
-// }
-
-export default AboutPagePreview

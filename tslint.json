@@ -6,6 +6,6 @@
     "no-implicit-dependencies": false,
     "semicolon": false,
     "trailing-comma": true,
-    ""
+    "jsx-no-multiline-js": false
   }
 }

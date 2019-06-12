@@ -1,12 +1,34 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Link, graphql } from 'gatsby'
+import { graphql, Link } from 'gatsby'
+import { FluidObject } from 'gatsby-image'
+import React, { FunctionComponent } from 'react'
 
-import Layout from '../components/Layout'
-import Features from '../components/Features'
 import BlogRoll from '../components/BlogRoll'
+import Features from '../components/Features'
+import Layout from '../components/Layout'
+import { Blurb, GatsbyImage, isGatsbyChildImage } from '../types/images'
 
-export const IndexPageTemplate = ({
+export interface IIndexPageImage {
+  childImageSharp: {
+    fluid: FluidObject
+  }
+}
+
+export interface IIndexPageTemplateProps {
+  image: GatsbyImage
+  title: string
+  heading: string
+  subheading: string
+  mainpitch: {
+    title: string
+    description: string
+  }
+  description: string
+  intro: {
+    blurbs: Blurb[]
+  }
+}
+
+export const IndexPageTemplate: FunctionComponent<IIndexPageTemplateProps> = ({
   image,
   title,
   heading,
@@ -19,29 +41,29 @@ export const IndexPageTemplate = ({
     <div
       className="full-width-image margin-top-0"
       style={{
+        backgroundAttachment: `fixed`,
         backgroundImage: `url(${
-          !!image.childImageSharp ? image.childImageSharp.fluid.src : image
+          isGatsbyChildImage(image) ? image.childImageSharp.fluid.src : image
         })`,
         backgroundPosition: `top left`,
-        backgroundAttachment: `fixed`,
       }}
     >
       <div
         style={{
-          display: 'flex',
-          height: '150px',
-          lineHeight: '1',
-          justifyContent: 'space-around',
           alignItems: 'left',
+          display: 'flex',
           flexDirection: 'column',
+          height: '150px',
+          justifyContent: 'space-around',
+          lineHeight: '1',
         }}
       >
         <h1
           className="has-text-weight-bold is-size-3-mobile is-size-2-tablet is-size-1-widescreen"
           style={{
+            backgroundColor: 'rgb(255, 68, 0)',
             boxShadow:
               'rgb(255, 68, 0) 0.5rem 0px 0px, rgb(255, 68, 0) -0.5rem 0px 0px',
-            backgroundColor: 'rgb(255, 68, 0)',
             color: 'white',
             lineHeight: '1',
             padding: '0.25em',
@@ -52,9 +74,9 @@ export const IndexPageTemplate = ({
         <h3
           className="has-text-weight-bold is-size-5-mobile is-size-5-tablet is-size-4-widescreen"
           style={{
+            backgroundColor: 'rgb(255, 68, 0)',
             boxShadow:
               'rgb(255, 68, 0) 0.5rem 0px 0px, rgb(255, 68, 0) -0.5rem 0px 0px',
-            backgroundColor: 'rgb(255, 68, 0)',
             color: 'white',
             lineHeight: '1',
             padding: '0.25em',
@@ -114,19 +136,15 @@ export const IndexPageTemplate = ({
   </div>
 )
 
-IndexPageTemplate.propTypes = {
-  image: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-  title: PropTypes.string,
-  heading: PropTypes.string,
-  subheading: PropTypes.string,
-  mainpitch: PropTypes.object,
-  description: PropTypes.string,
-  intro: PropTypes.shape({
-    blurbs: PropTypes.array,
-  }),
+interface IIndexPageProps {
+  data: {
+    markdownRemark: {
+      frontmatter: IIndexPageTemplateProps
+    }
+  }
 }
 
-const IndexPage = ({ data }) => {
+const IndexPage: FunctionComponent<IIndexPageProps> = ({ data }) => {
   const { frontmatter } = data.markdownRemark
 
   return (
@@ -142,14 +160,6 @@ const IndexPage = ({ data }) => {
       />
     </Layout>
   )
-}
-
-IndexPage.propTypes = {
-  data: PropTypes.shape({
-    markdownRemark: PropTypes.shape({
-      frontmatter: PropTypes.object,
-    }),
-  }),
 }
 
 export default IndexPage

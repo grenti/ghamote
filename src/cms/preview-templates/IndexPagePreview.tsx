@@ -1,8 +1,22 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { IndexPageTemplate } from '../../templates/index-page'
+import React, { FunctionComponent } from 'react'
+import {
+  IIndexPageTemplateProps,
+  IndexPageTemplate,
+} from '../../templates/index-page'
 
-const IndexPagePreview = ({ entry, getAsset }) => {
+interface IIndexPagePreviewProps {
+  entry: {
+    getIn: ([]) => IIndexPageTemplateProps & {
+      toJS: () => IIndexPageTemplateProps
+    }
+  }
+  getAsset?: () => string
+}
+
+const IndexPagePreview: FunctionComponent<IIndexPagePreviewProps> = ({
+  entry,
+  getAsset,
+}) => {
   const data = entry.getIn(['data']).toJS()
 
   if (data) {
@@ -20,13 +34,6 @@ const IndexPagePreview = ({ entry, getAsset }) => {
   } else {
     return <div>Loading...</div>
   }
-}
-
-IndexPagePreview.propTypes = {
-  entry: PropTypes.shape({
-    getIn: PropTypes.func,
-  }),
-  getAsset: PropTypes.func,
 }
 
 export default IndexPagePreview

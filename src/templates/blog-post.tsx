@@ -1,12 +1,26 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { kebabCase } from 'lodash'
-import Helmet from 'react-helmet'
 import { graphql, Link } from 'gatsby'
+import { kebabCase } from 'lodash'
+import React, { FunctionComponent, ReactElement } from 'react'
+import Helmet from 'react-helmet'
+import Content, {
+  HTMLContent,
+  IContentProps,
+  IHTMLContentProps,
+} from '../components/Content'
 import Layout from '../components/Layout'
-import Content, { HTMLContent } from '../components/Content'
 
-export const BlogPostTemplate = ({
+interface IBlogPostTemplate {
+  content: string | ReactElement
+  contentComponent?:
+    | FunctionComponent<IHTMLContentProps>
+    | FunctionComponent<IContentProps>
+  description: string
+  helmet?: {}
+  tags?: string[]
+  title: string
+}
+
+export const BlogPostTemplate: FunctionComponent<IBlogPostTemplate> = ({
   content,
   contentComponent,
   description,
@@ -46,15 +60,19 @@ export const BlogPostTemplate = ({
   )
 }
 
-BlogPostTemplate.propTypes = {
-  content: PropTypes.node.isRequired,
-  contentComponent: PropTypes.func,
-  description: PropTypes.string,
-  title: PropTypes.string,
-  helmet: PropTypes.object,
+interface IBlogPostProps {
+  data: {
+    markdownRemark: {
+      html: string
+      frontmatter: Omit<
+        IBlogPostTemplate,
+        'content' | 'contentComponent' | 'helmet'
+      >
+    }
+  }
 }
 
-const BlogPost = ({ data }) => {
+const BlogPost: FunctionComponent<IBlogPostProps> = ({ data }) => {
   const { markdownRemark: post } = data
 
   return (
@@ -77,12 +95,6 @@ const BlogPost = ({ data }) => {
       />
     </Layout>
   )
-}
-
-BlogPost.propTypes = {
-  data: PropTypes.shape({
-    markdownRemark: PropTypes.object,
-  }),
 }
 
 export default BlogPost

@@ -1,13 +1,53 @@
-import React from 'react'
-import PropTypes from 'prop-types'
 import { graphql } from 'gatsby'
-import Layout from '../components/Layout'
+import React, { FunctionComponent } from 'react'
 import Features from '../components/Features'
-import Testimonials from '../components/Testimonials'
-import Pricing from '../components/Pricing'
+import Layout from '../components/Layout'
 import PreviewCompatibleImage from '../components/PreviewCompatibleImage'
+import Pricing from '../components/Pricing'
+import Testimonials from '../components/Testimonials'
+import {
+  Blurb,
+  GatsbyImage,
+  GatsbyImageWithAlt,
+  IGatsbyChildImage,
+  IGatsbyImage,
+  isGatsbyChildImage,
+} from '../types/images'
 
-export const ProductPageTemplate = ({
+interface IProductPageTemplateProps {
+  image: GatsbyImage
+  title: string
+  heading: string
+  description: string
+  intro: {
+    blurbs: Blurb[]
+    heading: string
+    description: string
+  }
+  main: {
+    heading: string
+    description: string
+    image1: GatsbyImageWithAlt
+    image2: GatsbyImageWithAlt
+    image3: GatsbyImageWithAlt
+  }
+  testimonials: Array<{ author: string; quote: string }>
+  fullImage: GatsbyImage
+  pricing: {
+    heading: string
+    description: string
+    plans: Array<{
+      description: string
+      items: []
+      plan: string
+      price: string | number
+    }>
+  }
+}
+
+export const ProductPageTemplate: FunctionComponent<
+  IProductPageTemplateProps
+> = ({
   image,
   title,
   heading,
@@ -23,15 +63,15 @@ export const ProductPageTemplate = ({
       className="full-width-image-container margin-top-0"
       style={{
         backgroundImage: `url(${
-          !!image.childImageSharp ? image.childImageSharp.fluid.src : image
+          isGatsbyChildImage(image) ? image.childImageSharp.fluid.src : image
         })`,
       }}
     >
       <h2
         className="has-text-weight-bold is-size-1"
         style={{
-          boxShadow: '0.5rem 0 0 #f40, -0.5rem 0 0 #f40',
           backgroundColor: '#f40',
+          boxShadow: '0.5rem 0 0 #f40, -0.5rem 0 0 #f40',
           color: 'white',
           padding: '1rem',
         }}
@@ -85,7 +125,7 @@ export const ProductPageTemplate = ({
                 className="full-width-image-container"
                 style={{
                   backgroundImage: `url(${
-                    fullImage.childImageSharp
+                    isGatsbyChildImage(fullImage)
                       ? fullImage.childImageSharp.fluid.src
                       : fullImage
                   })`,
@@ -104,31 +144,47 @@ export const ProductPageTemplate = ({
   </div>
 )
 
-ProductPageTemplate.propTypes = {
-  image: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-  title: PropTypes.string,
-  heading: PropTypes.string,
-  description: PropTypes.string,
-  intro: PropTypes.shape({
-    blurbs: PropTypes.array,
-  }),
-  main: PropTypes.shape({
-    heading: PropTypes.string,
-    description: PropTypes.string,
-    image1: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-    image2: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-    image3: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-  }),
-  testimonials: PropTypes.array,
-  fullImage: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-  pricing: PropTypes.shape({
-    heading: PropTypes.string,
-    description: PropTypes.string,
-    plans: PropTypes.array,
-  }),
+interface IProductPageProps {
+  data: {
+    markdownRemark: {
+      frontmatter: {
+        image: GatsbyImage
+        title: string
+        heading: string
+        description: string
+        main: {
+          heading: string
+          description: string
+          image1: GatsbyImageWithAlt
+          image2: GatsbyImageWithAlt
+          image3: GatsbyImageWithAlt
+        }
+        intro: {
+          blurbs: Blurb[]
+          heading: string
+          description: string
+        }
+        pricing: {
+          heading: string
+          description: string
+          plans: Array<{
+            description: string
+            items: []
+            plan: string
+            price: string | number
+          }>
+        }
+        full_image: GatsbyImage
+        testimonials: Array<{
+          author: string
+          quote: string
+        }>
+      }
+    }
+  }
 }
 
-const ProductPage = ({ data }) => {
+const ProductPage: FunctionComponent<IProductPageProps> = ({ data }) => {
   const { frontmatter } = data.markdownRemark
 
   return (
@@ -146,14 +202,6 @@ const ProductPage = ({ data }) => {
       />
     </Layout>
   )
-}
-
-ProductPage.propTypes = {
-  data: PropTypes.shape({
-    markdownRemark: PropTypes.shape({
-      frontmatter: PropTypes.object,
-    }),
-  }),
 }
 
 export default ProductPage

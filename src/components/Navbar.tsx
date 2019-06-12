@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { Link } from 'gatsby'
 import github from '../img/github-icon.svg'
 import logo from '../img/logo.svg'
 
-const Navbar = class extends React.Component {
-  constructor(props) {
+interface INavbarState {
+  active: boolean
+  navBarActiveClass: string
+}
+
+const Navbar = class extends Component<{}, INavbarState> {
+  constructor(props: {}) {
     super(props)
     this.state = {
       active: false,
@@ -28,7 +33,7 @@ const Navbar = class extends React.Component {
           : this.setState({
               navBarActiveClass: '',
             })
-      }
+      },
     )
   }
 

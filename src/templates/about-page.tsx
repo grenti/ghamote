@@ -1,16 +1,19 @@
-import React, { FunctionComponent, ReactElement } from 'react'
-// import PropTypes from 'prop-types'
 import { graphql } from 'gatsby'
+import React, { FunctionComponent } from 'react'
+import Content, { HTMLContent, IHTMLContentProps } from '../components/Content'
 import Layout from '../components/Layout'
-import Content, { HTMLContent } from '../components/Content'
 
 interface IAboutPageTemplateProps {
   title: string
   content: string
-  contentComponent?: ReactElement
+  contentComponent?: FunctionComponent<IHTMLContentProps>
 }
 
-export const AboutPageTemplate: FunctionComponent<IAboutPageTemplateProps> = ({ title, content, contentComponent }) => {
+export const AboutPageTemplate: FunctionComponent<IAboutPageTemplateProps> = ({
+  title,
+  content,
+  contentComponent,
+}) => {
   const PageContent = contentComponent || Content
 
   return (
@@ -30,12 +33,6 @@ export const AboutPageTemplate: FunctionComponent<IAboutPageTemplateProps> = ({ 
     </section>
   )
 }
-
-// AboutPageTemplate.propTypes = {
-//   title: PropTypes.string.isRequired,
-//   content: PropTypes.string,
-//   contentComponent: PropTypes.func,
-// }
 
 interface IAboutPageProps {
   data: {
@@ -61,10 +58,6 @@ const AboutPage: FunctionComponent<IAboutPageProps> = ({ data }) => {
     </Layout>
   )
 }
-
-// AboutPage.propTypes = {
-//   data: PropTypes.object.isRequired,
-// }
 
 export default AboutPage
 
