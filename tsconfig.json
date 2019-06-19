@@ -1,26 +1,22 @@
 {
-  "compilerOptions": {
-    "rootDirs": ["src", "lambda"],
-    "outDir": "./dist/",
-    "sourceMap": true,
-    "moduleResolution": "node",
-    "module": "esnext",
-    "target": "esnext",
-    "baseUrl": ".",
-    "paths": {
-      "*": ["*", "src/*"]
-    },
-    "noImplicitAny": true,
-    "experimentalDecorators": true,
-    "isolatedModules": true,
-    "esModuleInterop": true,
-    "jsx": "react",
-    "noEmit": true,
-    "allowJs": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true
-  },
   "exclude": ["node_modules"],
   "include": ["./src/**/*"],
+  "compilerOptions": {
+    "jsx": "preserve",
+    "module": "commonjs",
+    "sourceMap": true,
+    "target": "esnext",
+    "lib": ["dom", "esnext"],
+    "strict": true,
+    "noEmit": true,
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
+  },
   "compileOnSave": true
 }

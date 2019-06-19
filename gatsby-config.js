@@ -1,4 +1,4 @@
-var proxy = require('http-proxy-middleware')
+const proxy = require('http-proxy-middleware')
 
 module.exports = {
   siteMetadata: {
@@ -11,11 +11,18 @@ module.exports = {
     'gatsby-plugin-sass',
     {
       resolve: 'gatsby-plugin-typescript',
+      // options: {
+      //   isTSX: true,
+      //   jsxPragma: 'jsx',
+      //   allExtensions: true,
+      // }
+    },
+    {
+      resolve: 'gatsby-plugin-tslint',
       options: {
-        isTSX: true,
-        jsxPragma: 'jsx',
-        allExtensions: true,
-      }
+        test: /\.ts$|\.tsx$/,
+        exclude: /(node_modules|cache|public)/,
+      },
     },
     {
       // keep as first gatsby-source-filesystem plugin for gatsby image support
@@ -94,7 +101,7 @@ module.exports = {
         pathRewrite: {
           '/.netlify/functions/': '',
         },
-      })
+      }),
     )
   },
 }

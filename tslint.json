@@ -1,11 +1,13 @@
 {
-  "extends": ["tslint:latest", "tslint-config-prettier", "tslint-react"],
+  "extends": ["tslint:latest", "tslint-react", "tslint-config-prettier"],
+  "rulesDirectory": ["tslint-plugin-prettier"],
   "rules": {
-    "member-access": false,
-    "no-submodule-imports": false,
-    "no-implicit-dependencies": false,
+    "prettier": true,
     "semicolon": false,
     "trailing-comma": true,
-    "jsx-no-multiline-js": false
+    "quotemark": [true, "single", "jsx-double"],
+    "jsx-no-multiline-js": false,
+    "jsx-no-lambda": false,
+    "member-access": false
   }
 }
